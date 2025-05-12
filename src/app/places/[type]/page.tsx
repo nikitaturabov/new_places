@@ -13,12 +13,15 @@ type Place = {
   address_name: string;
   rating?: number;
   image?: string;
-  external_content: {
-    count: number;
-    main_photo_url: string;
-    subtype: string;
-    type: string;
-  }[]
+  external_content?: {
+    count?: number;
+    main_photo_url?: string;
+    subtype?: string;
+    type?: string;
+  }[],
+  dates?: {
+    updated_at?: string;
+  }
 }
 
 const API_KEY = "1dd398f5-c171-4588-a696-dd5ef16af838";
@@ -35,7 +38,7 @@ const getCityId = async () => {
 const getPlaces = async (type: string): Promise<Place[]> => {
   const cityId = await getCityId();
   
-  const res = await fetch(`https://catalog.api.2gis.com/3.0/items?q=${type}&city_id=${cityId}&sort=creation_time&fields=items.external_content&key=${API_KEY}`, {
+  const res = await fetch(`https://catalog.api.2gis.com/3.0/items?q=${type}&city_id=${cityId}&sort=creation_time&fields=items.external_content,items.dates&key=${API_KEY}`, {
     method: "GET"
   });
   const data = await res.json();
@@ -48,6 +51,11 @@ type PlaceListProps = {
 }
 
 function PlaceList({ places }: PlaceListProps) {
+  const getDate = (date: string) => {
+    const dateObj = new Date(date);
+    return dateObj.toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' });
+  }
+
   return (
     <div className='flex flex-col items-center w-full max-w-4xl mx-auto p-4'>
       <div className="flex flex-col gap-6 w-full">
@@ -58,9 +66,9 @@ function PlaceList({ places }: PlaceListProps) {
           >
             <div className="flex flex-col md:flex-row">
               <div className="w-full md:w-48 h-48 bg-gray-200 relative">
-                {place.external_content[0].main_photo_url ? (
+                {place?.external_content?.[0]?.main_photo_url ? (
                   <img 
-                    src={place.external_content[0].main_photo_url} 
+                    src={place?.external_content?.[0]?.main_photo_url} 
                     alt={place.name}
                     className="w-full h-full object-cover"
                   />
@@ -80,6 +88,11 @@ function PlaceList({ places }: PlaceListProps) {
                     </div>
                   )}
                 </div>
+                {place.dates?.updated_at && ( 
+                  <div className="text-sm text-gray-600 mb-4">
+                      {'Дата открытия:'} <b>{getDate(place.dates?.updated_at || '')}</b>
+                  </div>
+                )}
                 <div className="flex items-center gap-2 text-gray-600 mb-4">
                   <MapPinIcon className="w-4 h-4" />
                   <p>{place.address_name}</p>
