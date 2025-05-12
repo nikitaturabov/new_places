@@ -5,7 +5,10 @@ export type TypePlaceEat = {
   hookah: string;
   bar: string;
   pub: string;
-  terrace: string;
+  shaurma: string;
+  pizza: string;
+  burger: string;
+  sushi: string;
 }
 
 export const typePlaceEat: TypePlaceEat = {
@@ -15,5 +18,8 @@ export const typePlaceEat: TypePlaceEat = {
   "hookah": "кальянная",
   "bar": "бар",
   "pub": "пивной",
-  "terrace": "веранда", 
+  "shaurma": "шаурма",
+  "pizza": "пицца",
+  "burger": "бургер",
+  "sushi": "суши",
 }
