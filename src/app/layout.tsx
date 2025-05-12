@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { typePlaceEat } from "./consts/places";
+import Link from "next/link";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,6 +21,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+
 }: Readonly<{
   children: React.ReactNode;
 }>) {
@@ -27,6 +30,15 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <main className="flex justify-center items-center">
+          <div className="p-4 flex flex-wrap gap-2">
+          {Object.keys(typePlaceEat).map((type) => (
+            <Link className="p-2 rounded-md bg-gray-100 hover:bg-gray-200 text-gray-800 ml-2" href={`/places/${type}`} key={type}>  
+              {typePlaceEat[type as keyof typeof typePlaceEat]}
+            </Link>
+          ))}
+        </div>
+      </main>
         {children}
       </body>
     </html>
