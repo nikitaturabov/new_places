@@ -44,7 +44,7 @@ const getPlaces = async (type: string): Promise<TPlace[]> => {
 	const cityId = await getCityId();
 
 	const res = await fetch(
-		`https://catalog.api.2gis.com/3.0/items?q=${type}&city_id=${cityId}&sort=creation_time&fields=items.external_content,items.dates&key=${API_KEY}`,
+		`https://catalog.api.2gis.com/3.0/items?q=${type}&city_id=${cityId}&sort=creation_time&fields=items.dates,items.external_content&key=${API_KEY}`,
 		{
 			method: "GET",
 		}
@@ -67,6 +67,8 @@ function PlaceList({ places }: PlaceListProps) {
 			year: "numeric",
 		});
 	};
+
+	console.log(places);
 
 	return (
 		<div className="flex flex-col items-center w-full p-4">

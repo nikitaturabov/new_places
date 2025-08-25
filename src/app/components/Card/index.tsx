@@ -1,12 +1,12 @@
 import { Link } from "@heroui/react";
 import { FC } from "react";
-import Image from "next/image";
 import { MapPinIcon } from "@heroicons/react/24/solid";
 
 export type TPlaceCard = {
 	name: string;
 	address_name: string;
 	rating?: number;
+	image?: string;
 	photo_url?: string;
 	date: string;
 	placeId: number;
@@ -20,13 +20,10 @@ export const Card: FC<TPlaceCard> = (props) => {
 			<div className="flex flex-col md:flex-row">
 				<div className="w-full md:w-48 h-48 bg-gray-200 relative">
 					{photo_url ? (
-						<Image
+						<img
 							src={photo_url}
 							alt={name}
-							fill
-							sizes="(max-width: 768px) 100vw, 192px"
-							className="object-cover"
-							unoptimized
+							className="w-full h-full object-cover"
 						/>
 					) : (
 						<div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
