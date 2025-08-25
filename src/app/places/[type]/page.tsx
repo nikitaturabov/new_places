@@ -23,7 +23,7 @@ export type TPlace = {
 	};
 };
 
-const API_KEY = process.env.NEXT_PUBLIC_2GIS_API_KEY || "";
+const API_KEY = "12c23ea7-7f10-4f9c-8838-8572e8729c9c";
 
 const getCityId = async () => {
 	if (!API_KEY) {
